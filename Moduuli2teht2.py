@@ -5,9 +5,3 @@ pinta = (säde**2)*pi
 print("ympyrän pinta-ala: " + str(pinta))
 
 
-
-
-
-
-
-
