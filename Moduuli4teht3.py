@@ -17,4 +17,3 @@ if luvut:
     pienin = min(luvut)
     suurin = max(luvut)
     print(f"Pienin luku on {pienin} ja suurin luku on {suurin}.")
-
