@@ -6,3 +6,5 @@ for luku in range(noppa):
     print(f"arpakuutio{luku+1}: {heitto}")
     summa += heitto
     print(f"Arpakuutioiden summa: {summa}.")
+
+
