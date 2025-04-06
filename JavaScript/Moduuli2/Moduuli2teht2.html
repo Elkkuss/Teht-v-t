@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tehtävä 2</title>
+</head>
+<body>
+     <h2>Participant Names in Alphabetical Order</h2>
+  <ol id="participant-list"></ol>
+
+  <script>
+    const participantNames = [];
+
+    let count = prompt("How many participants?");
+    count = parseInt(count);
+
+    if (isNaN(count) || count <= 0) {
+      alert("Please enter a valid number greater than 0.");
+    } else {
+
+      for (let i = 0; i < count; i++) {
+        let name = prompt(`Enter the name of participant ${i + 1}:`);
+        if (name) {
+          participantNames.push(name.trim());
+        } else {
+          i--;
+        }
+      }
+
+      participantNames.sort();
+
+      const listElement = document.getElementById("participant-list");
+      participantNames.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        listElement.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
