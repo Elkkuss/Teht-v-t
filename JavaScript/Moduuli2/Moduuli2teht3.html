@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tehtävä 3</title>
+</head>
+<body>
+    <h2>Dog Names in Reverse Alphabetical Order</h2>
+  <ul id="dog-list"></ul>
+
+  <script>
+    const dogNames = [];
+
+    for (let i = 0; i < 6; i++) {
+      const name = prompt(`Enter the name of dog ${i + 1}:`);
+      if (name) {
+        dogNames.push(name.trim());
+      } else {
+        i--;
+      }
+    }
+    dogNames.sort().reverse();
+
+    const listElement = document.getElementById("dog-list");
+    dogNames.forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      listElement.appendChild(li);
+    });
+  </script>
+</body>
+</html>
