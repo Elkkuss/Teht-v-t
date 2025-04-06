@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tehtävä 4</title>
+</head>
+<body>
+     <h2>The numbers are printed to the console</h2>
+
+  <script>
+    const numbers = [];
+
+    while (true) {
+      let input = prompt("Enter a number (0 to stop):");
+      let num = Number(input);
+
+      if (isNaN(num)) {
+        alert("Please enter a valid number.");
+        continue;
+      }
+
+      if (num === 0) {
+        break;
+      }
+
+      numbers.push(num);
+    }
+
+    numbers.sort((a, b) => b - a);
+
+    console.log("Numbers in descending order:");
+    console.log(numbers);
+  </script>
+</body>
+</html>
