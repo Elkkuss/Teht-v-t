@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TV Series & Chuck Norris Jokes</title>
+  <style>
+    article {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      margin-bottom: 1em;
+      max-width: 600px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search for a TV Show</h1>
+  <form id="tvForm">
+    <input id="tvQuery" name="q" type="text" placeholder="Enter TV show name" required>
+    <input type="submit" value="Search TV Shows">
+  </form>
+
+  <div id="tvResults"></div>
+
+  <h1>Search Chuck Norris Jokes</h1>
+  <form id="jokeForm">
+    <input id="jokeQuery" name="q" type="text" placeholder="Enter a keyword" required>
+    <input type="submit" value="Search Jokes">
+  </form>
+
+  <div id="jokeResults"></div>
+
+  <script>
+    const tvForm = document.getElementById('tvForm');
+    const tvInput = document.getElementById('tvQuery');
+    const tvResultsDiv = document.getElementById('tvResults');
+
+    tvForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const query = tvInput.value.trim();
+      if (!query) return;
+
+      fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          tvResultsDiv.innerHTML = '';
+          data.forEach(tvShow => {
+            const show = tvShow.show;
+            const article = document.createElement('article');
+
+            const title = document.createElement('h2');
+            title.textContent = show.name;
+            article.appendChild(title);
+
+            const link = document.createElement('a');
+            link.href = show.url;
+            link.target = "_blank";
+            link.textContent = "View Details";
+            article.appendChild(link);
+
+            if (show.image?.medium) {
+              const img = document.createElement('img');
+              img.src = show.image.medium;
+              img.alt = show.name;
+              article.appendChild(img);
+            }
+
+            const summary = document.createElement('div');
+            summary.innerHTML = show.summary || 'No summary available.';
+            article.appendChild(summary);
+
+            tvResultsDiv.appendChild(article);
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          tvResultsDiv.innerHTML = '<p>Error fetching TV show data.</p>';
+        });
+    });
+
+    const jokeForm = document.getElementById('jokeForm');
+    const jokeInput = document.getElementById('jokeQuery');
+    const jokeResultsDiv = document.getElementById('jokeResults');
+
+    jokeForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const query = jokeInput.value.trim();
+      if (!query) return;
+
+      fetch(`https://api.chucknorris.io/jokes/search?query=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          jokeResultsDiv.innerHTML = '';
+          if (data.total === 0) {
+            jokeResultsDiv.innerHTML = '<p>No jokes found.</p>';
+            return;
+          }
+
+          data.result.forEach(joke => {
+            const article = document.createElement('article');
+            const p = document.createElement('p');
+            p.textContent = joke.value;
+            article.appendChild(p);
+            jokeResultsDiv.appendChild(article);
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          jokeResultsDiv.innerHTML = '<p>Error fetching jokes.</p>';
+        });
+    });
+  </script>
+</body>
+</html>
